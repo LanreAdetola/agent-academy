@@ -1,0 +1,7 @@
+mcs.metadata:
+  componentName: US Travel Website
+  description: US Travel Website
+kind: KnowledgeSourceConfiguration
+source:
+  kind: PublicSiteSearchSource
+  site: https://travel.state.gov/

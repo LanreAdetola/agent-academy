@@ -1,0 +1,20 @@
+mcs.metadata:
+  componentName: Conversation Start
+  description: This system topic triggers when the agent receives an Activity indicating the beginning of a new conversation. If you do not want the agent to initiate the conversation, disable this topic.
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnConversationStart
+  id: main
+  actions:
+    - kind: SendActivity
+      id: sendActivity_o9adpW
+      activity:
+        text:
+          - |-
+            Hello, I'm {System.Bot.Name} Agent, a virtual assistant. Just so you are aware, I sometimes use AI to answer your questions. I'm here to assist you with all your safe travel inquiries. Whether you need information about travel documents, visa requirements, local regulations, consulate details, or travel insurance options, I've got you covered.
+
+            _**Note**: You can now customize this agent's topics and knowledge for your own needs. For more information about this agent and how to modify it, visit the agent [documentation.](https://go.microsoft.com/fwlink/?linkid=2271279)_
+        quickReplies:
+          - kind: MessageBack
+            title: What can I ask?
+            text: What can I ask?

@@ -1,0 +1,10 @@
+mcs.metadata:
+  componentName: IT Expert
+kind: TaskDialog
+modelDisplayName: IT Expert
+modelDescription: IT Expert
+action:
+  kind: InvokeAIBuilderModelTaskAction
+  aIModelId: 4575f4c8-68a4-4e87-a51b-021112bd15ae
+
+outputMode: All

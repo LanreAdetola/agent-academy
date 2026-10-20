@@ -1,0 +1,7 @@
+mcs.metadata:
+  componentName: https://european-union.europa.eu/
+  description: This knowledge source searches information on the web found in https://european-union.europa.eu/ website
+kind: KnowledgeSourceConfiguration
+source:
+  kind: PublicSiteSearchSource
+  site: https://european-union.europa.eu/

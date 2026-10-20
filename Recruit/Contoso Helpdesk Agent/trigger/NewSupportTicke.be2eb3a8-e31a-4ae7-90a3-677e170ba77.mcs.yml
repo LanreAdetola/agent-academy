@@ -1,0 +1,12 @@
+mcs.metadata:
+  componentName: New Support Ticket Created in SharePoint
+  description: "Trigger your agent with certain message upon event: When an item is created."
+kind: ExternalTriggerConfiguration
+externalTriggerSource:
+  kind: WorkflowExternalTrigger
+  flowId: 26e874d1-bccb-f111-a05c-002248db5cc1
+
+extensionData:
+  flowName: e4e5e098-da7d-66ae-8675-8dab2e3c97e3
+  flowUrl: /providers/Microsoft.ProcessSimple/environments/979aac19-195f-e8da-80ae-0e70e312a54d/flows/e4e5e098-da7d-66ae-8675-8dab2e3c97e3
+  triggerConnectionType: SharePoint

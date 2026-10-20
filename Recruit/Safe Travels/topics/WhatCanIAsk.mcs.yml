@@ -1,0 +1,33 @@
+mcs.metadata:
+  componentName: What Can I Ask
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    triggerQueries:
+      - what can I ask you
+      - help me with something
+      - give me information
+      - answer my questions
+      - tell me more
+      - what do you know about
+      - can you assist me with something
+      - I need your expertise on something
+      - guide me through this topic
+
+  actions:
+    - kind: SendActivity
+      id: 55TI87
+      activity:
+        text:
+          - Here is a list of sample questions or things you can try to ask me.
+        quickReplies:
+          - kind: MessageBack
+            text: How do I get a passport?
+
+          - kind: MessageBack
+            text: What travel advisories exist?
+
+          - kind: MessageBack
+            text: How do I find visa requirements?

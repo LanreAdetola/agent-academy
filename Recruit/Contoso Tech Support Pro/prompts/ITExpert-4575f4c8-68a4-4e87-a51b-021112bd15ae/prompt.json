@@ -1,0 +1,22 @@
+﻿{
+  "name": "IT Expert",
+  "instruction": "When a user asks IT related questions such as questions on their device, run the \u0022IT Expert- prompt\u0022. Use their question as the problem input of the \u0022IT Expert\u0022 prompt.",
+  "model": "gpt-41-mini",
+  "modelParameters": {
+    "gptParameters": {
+      "temperature": 0
+    }
+  },
+  "inputs": [],
+  "output": {
+    "formats": [
+      "text"
+    ]
+  },
+  "settings": {
+    "recordRetrievalLimit": 30,
+    "shouldPreserveRecordLinks": null,
+    "runtime": null
+  },
+  "version": "GptDynamicPrompt-2"
+}

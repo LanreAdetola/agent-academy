@@ -1,0 +1,9 @@
+﻿connectionReferences:
+  - connectionReferenceLogicalName: cts_itHelpDeskAssistant.shared_office365.shared-office365-06c9272c-45a5-4e48-aa90-b3c5488a04d4
+    connectorId: /providers/Microsoft.PowerApps/apis/shared_office365
+  - connectionReferenceLogicalName: cts_itHelpDeskAssistant.shared_sharepointonline.7ea9d26a394f4d3b80e7e411ee71609d
+    connectorId: /providers/Microsoft.PowerApps/apis/shared_sharepointonline
+  - connectionReferenceLogicalName: cts_sharedmicrosoftcopilotstudio_b4d59
+    connectorId: /providers/Microsoft.PowerApps/apis/shared_microsoftcopilotstudio
+  - connectionReferenceLogicalName: new_sharedoffice365_bffd0
+    connectorId: /providers/Microsoft.PowerApps/apis/shared_office365

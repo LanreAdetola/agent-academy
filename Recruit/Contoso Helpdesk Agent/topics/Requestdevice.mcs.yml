@@ -1,0 +1,154 @@
+mcs.metadata:
+  componentName: Request device
+kind: AdaptiveDialog
+modelDescription: This topic helps users request a device when they answer yes to the question that asks the user if they would like to request one of these devices.
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent: {}
+  actions:
+    - kind: AdaptiveCardPrompt
+      id: ATB6Lb
+      interruptionPolicy:
+        interruptionTopicListFilter:
+          kind: IncludeSelectedTopics
+          allowedInterruptTopics:
+            - cts_itHelpDeskAssistant.topic.Availabledevices
+
+      card: |-
+        ={
+          type: "AdaptiveCard",
+          '$schema': "https://adaptivecards.io/schemas/adaptive-card.json",
+          version: "1.5",
+          backgroundImage: {
+            url: "https://adaptivecards.io/content/backgroundImage.png",
+            verticalAlignment: "Center"
+          },
+          body: [
+            {
+              type: "Container",
+              style: "emphasis",
+              bleed: true,
+              items: [
+                {
+                  type: "TextBlock",
+                  text: "Device selection",
+                  weight: "Bolder",
+                  size: "Large",
+                  wrap: true
+                }
+              ]
+            },
+            {
+              type: "Container",
+              style: "default",
+              items: [
+                {
+                  type: "TextBlock",
+                  text: "Please select which device you would like to request:",
+                  wrap: true,
+                  size: "Medium"
+                }
+              ],
+              spacing: "None"
+            },
+            {
+              type: "Container",
+              spacing: "None",
+              items: [
+                {
+                  type: "Input.ChoiceSet",
+                  id: "deviceSelectionId",
+                  style: "expanded",
+                  choices: ForAll(Global.VarDevices.value,
+                    {
+                      title: If(IsBlank(Model), "NA", Model),
+                      value: If(IsBlank(ID), "NA", ID)
+                    }
+                  )
+                }
+              ]
+            },
+            {
+              type: "Container",
+              spacing: "None",
+              style: "emphasis",
+              items: [
+                {
+                  type: "TextBlock",
+                  text: "Additional Information",
+                  wrap: true
+                },
+                {
+                  type: "Input.Text",
+                  id: "commentsId",
+                  placeholder: "Please provide any specific requirements or comments",
+                  isMultiline: true,
+                  spacing: "Small"
+                }
+              ]
+            },
+            {
+              type: "Container",
+              spacing: "Medium",
+              items: [
+                {
+                  type: "FactSet",
+                  facts: [
+                    {
+                      title: "Request type:",
+                      value: "New Device"
+                    },
+                    {
+                      title: "Response time:",
+                      value: "3-5 Business Days"
+                    }
+                  ],
+                  spacing: "Small"
+                }
+              ]
+            }
+          ],
+          actions: [
+            {
+              type: "Action.Submit",
+              title: "Submit Request",
+              id: "deviceSubmittedId"
+            }
+          ]
+        }
+      output:
+        binding:
+          actionSubmitId: Topic.actionSubmitId
+          commentsId: Topic.commentsId
+          deviceSelectionId: Topic.deviceSelectionId
+
+      outputType:
+        properties:
+          actionSubmitId: String
+          commentsId: String
+          deviceSelectionId: String
+
+    - kind: InvokeFlowAction
+      id: invokeFlowAction_nqpD9d
+      input:
+        binding:
+          text: =Topic.deviceSelectionId
+          text_1: =System.User.DisplayName
+          text_2: =If(IsBlank(Topic.commentsId), "", Topic.commentsId)
+
+      output:
+        binding:
+          modelvalue: Topic.ModelValue
+
+      flowId: b1c52eed-83cb-f111-a05c-002248db5cc1
+
+    - kind: SendActivity
+      id: sendActivity_HhkiDG
+      activity: Thanks {System.User.DisplayName}. Your selected device,{Topic.ModelValue}, has been submitted and will be reviewed by your manager.
+
+    - kind: EndConversation
+      id: wNAzpH
+
+inputType: {}
+outputType: {}

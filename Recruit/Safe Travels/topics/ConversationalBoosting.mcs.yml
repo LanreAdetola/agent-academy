@@ -1,0 +1,37 @@
+mcs.metadata:
+  componentName: Conversational boosting
+  description: Create generative answers from data sources.
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnUnknownIntent
+  id: main
+  priority: -1
+  actions:
+    - kind: SearchAndSummarizeContent
+      id: search-content
+      variable: Topic.Answer
+      userInput: =System.Activity.Text
+      moderationLevel: High
+      publicDataSource: {}
+      sharePointSearchDataSource: {}
+      tone: Friendly
+
+    - kind: ConditionGroup
+      id: has-answer-conditions
+      conditions:
+        - id: has-answer
+          condition: =!IsBlank(Topic.Answer)
+          actions:
+            - kind: SendActivity
+              id: sendActivity_kVlJ1K
+              activity:
+                text:
+                  - Is there anything else I can help you with?
+                quickReplies:
+                  - kind: MessageBack
+                    title: What can I ask?
+                    text: What can I ask?
+
+            - kind: EndDialog
+              id: end-topic
+              clearTopicQueue: true

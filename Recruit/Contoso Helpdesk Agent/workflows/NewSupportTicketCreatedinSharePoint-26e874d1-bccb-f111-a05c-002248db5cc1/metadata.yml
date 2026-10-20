@@ -1,0 +1,33 @@
+﻿jsonFileName: workflows/NewSupportTicketCreatedinSharePoint-26e874d1-bccb-f111-a05c-002248db5cc1/workflow.json
+workflowId: 26e874d1-bccb-f111-a05c-002248db5cc1
+name: New Support Ticket Created in SharePoint
+type: 1
+description: 'Trigger your agent with certain message upon event: When an item is created.'
+subprocess: false
+category: 5
+mode: 0
+scope: 4
+onDemand: false
+triggerOnCreate: false
+triggerOnDelete: false
+asyncAutodelete: false
+syncWorkflowLogOnFailure: false
+stateCode: 1
+statusCode: 2
+runAs: 1
+isTransacted: true
+introducedVersion: 1.0.0.0
+isCustomizable:
+  value: true
+  canBeChanged: true
+  managedPropertyLogicalName: iscustomizableanddeletable
+businessProcessType: 0
+isCustomProcessingStepAllowedForOtherPublishers:
+  value: true
+  canBeChanged: true
+  managedPropertyLogicalName: canbedeleted
+modernFlowType: 0
+primaryEntity: none
+connectionReferences:
+- cts_itHelpDeskAssistant.shared_sharepointonline.7ea9d26a394f4d3b80e7e411ee71609d
+- cts_sharedmicrosoftcopilotstudio_b4d59

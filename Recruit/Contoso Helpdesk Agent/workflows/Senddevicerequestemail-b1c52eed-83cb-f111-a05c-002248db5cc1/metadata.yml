@@ -1,0 +1,33 @@
+﻿jsonFileName: workflows/Senddevicerequestemail-b1c52eed-83cb-f111-a05c-002248db5cc1/workflow.json
+workflowId: b1c52eed-83cb-f111-a05c-002248db5cc1
+name: Send device request email
+type: 1
+description: This flow starts when an agent manually triggers it and provides device and user details. It retrieves device information from a SharePoint list using the provided device ID. After successfully getting the device details, it sends an email to a manager with the request information, and sends a value back to the agent.
+subprocess: false
+category: 5
+mode: 0
+scope: 4
+onDemand: false
+triggerOnCreate: false
+triggerOnDelete: false
+asyncAutodelete: false
+syncWorkflowLogOnFailure: false
+stateCode: 1
+statusCode: 2
+runAs: 1
+isTransacted: true
+introducedVersion: 1.0.0.0
+isCustomizable:
+  value: true
+  canBeChanged: true
+  managedPropertyLogicalName: iscustomizableanddeletable
+businessProcessType: 0
+isCustomProcessingStepAllowedForOtherPublishers:
+  value: true
+  canBeChanged: true
+  managedPropertyLogicalName: canbedeleted
+modernFlowType: 1
+primaryEntity: none
+connectionReferences:
+- cts_itHelpDeskAssistant.shared_sharepointonline.7ea9d26a394f4d3b80e7e411ee71609d
+- new_sharedoffice365_bffd0

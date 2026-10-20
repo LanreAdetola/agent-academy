@@ -1,0 +1,7 @@
+mcs.metadata:
+  componentName: Contoso IT
+  description: This knowledge source provides information found in ContosoIT SharePoint.
+kind: KnowledgeSourceConfiguration
+source:
+  kind: SharePointSearchSource
+  site: https://<your-tenant>.sharepoint.com/sites/ContosoIT

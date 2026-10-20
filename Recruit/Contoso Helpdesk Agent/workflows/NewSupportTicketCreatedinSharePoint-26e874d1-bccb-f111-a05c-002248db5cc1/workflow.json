@@ -1,0 +1,78 @@
+﻿{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "name": "7ea9d26a394f4d3b80e7e411ee71609d",
+          "connectionReferenceLogicalName": "cts_itHelpDeskAssistant.shared_sharepointonline.7ea9d26a394f4d3b80e7e411ee71609d"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_microsoftcopilotstudio": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "name": "shared-microsoftcopi-0841466d-70b0-4684-a3a7-f7996af481d0",
+          "connectionReferenceLogicalName": "cts_sharedmicrosoftcopilotstudio_b4d59"
+        },
+        "api": {
+          "name": "shared_microsoftcopilotstudio"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_an_item_is_created": {
+          "recurrence": {
+            "interval": 1,
+            "frequency": "Minute"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://<your-tenant>.sharepoint.com/sites/ContosoIT",
+              "table": "52285274-a93b-4986-b5fa-384c6fcc9598"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetOnNewItems",
+              "connectionName": "shared_sharepointonline"
+            }
+          }
+        }
+      },
+      "actions": {
+        "Sends_a_prompt_to_the_specified_copilot_for_processing": {
+          "runAfter": {},
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "Copilot": "cts_itHelpDeskAssistant",
+              "body/message": "New Support Ticket Created in SharePoint:\n@{concat(\u0027Submitted By Name: \u0027, item()?[\u0027Author/DisplayName\u0027], \u0027\\nSubmitted By Email: \u0027, item()?[\u0027Author/Email\u0027], \u0027\\nTitle: \u0027, item()?[\u0027Title\u0027], \u0027\\nIssue Description: \u0027, item()?[\u0027Description\u0027], \u0027\\nPriority: \u0027, item()?[\u0027Priority/Value\u0027], \u0027\\nTicket ID : \u0027, item()?[\u0027ID\u0027])}\n\nUse the \u0027Acknowledge SharePoint Ticket\u0027 tool to generate the email body automatically and respond.\n\nIMPORTANT: Do not wait for any user input. Work completely autonomously."
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftcopilotstudio",
+              "operationId": "ExecuteCopilot",
+              "connectionName": "shared_microsoftcopilotstudio"
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}

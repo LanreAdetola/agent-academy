@@ -1,0 +1,157 @@
+﻿{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "name": "7ea9d26a394f4d3b80e7e411ee71609d",
+          "connectionReferenceLogicalName": "cts_itHelpDeskAssistant.shared_sharepointonline.7ea9d26a394f4d3b80e7e411ee71609d"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "name": "shared-office365-06c9272c-45a5-4e48-aa90-b3c5488a04d4",
+          "connectionReferenceLogicalName": "new_sharedoffice365_bffd0"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      }
+    },
+    "definition": {
+      "metadata": {
+        "defaultToEmbeddedConnections": true
+      },
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b8f61c18-7224-4f8a-9c5f-72fbce5df764"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Please enter your input",
+                  "title": "DeviceSharePointId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_1": {
+                  "description": "Please enter your input",
+                  "title": "User",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_2": {
+                  "description": "Please enter your input",
+                  "title": "AdditionalComments",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Respond_to_the_agent": {
+          "runAfter": {
+            "Send_an_email_to_manager": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81c94f73-dd52-465c-ad3b-a4686da63cc3"
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "modelvalue": {
+                  "title": "ModelValue",
+                  "description": "",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "modelvalue": "@{outputs(\u0027Get_Device\u0027)?[\u0027body/Model\u0027]}"
+            }
+          }
+        },
+        "Get_Device": {
+          "runAfter": {},
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://<your-tenant>.sharepoint.com/sites/ContosoIT",
+              "table": "f1dbdfee-03a6-4ddf-93f9-917766cb4337",
+              "id": "@triggerBody()?[\u0027text\u0027]",
+              "view": "82603082-098f-43ea-9f10-6abe2ccd6701"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetItem",
+              "connectionName": "shared_sharepointonline"
+            }
+          }
+        },
+        "Send_an_email_to_manager": {
+          "runAfter": {
+            "Get_Device": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "emailMessage/To": "<manager-email>",
+              "emailMessage/Subject": "Request type: new device",
+              "emailMessage/Body": "\u003Cp class=\u0022editor-paragraph\u0022\u003EHi,\u003Cbr\u003E\u003Cbr\u003ENew device requested from @{triggerBody()?[\u0027text_1\u0027]}\u003Cbr\u003E\u003Cbr\u003EManufacturer: @{outputs(\u0027Get_Device\u0027)?[\u0027body/Manufacturer/Value\u0027]}\u003Cbr\u003EModel: @{outputs(\u0027Get_Device\u0027)?[\u0027body/Model\u0027]}\u003Cbr\u003E\u003Ca href=\u0022@{outputs(\u0027Get_Device\u0027)?[\u0027body/{Link}\u0027]}\u0022\u003ELink to item in SharePoint\u003C/a\u003E\u003Cbr\u003EAdditional comments from@{triggerBody()?[\u0027text_1\u0027]}: @{if(empty(triggerBody()?[\u0027text_2\u0027]), \u0027None\u0027,triggerBody()?[\u0027text_2\u0027])}\u003Cbr\u003E\u003Cbr\u003E\u003Ci\u003E\u003Cem class=\u0022editor-text-italic\u0022\u003EThis is an automated email from Contoso Helpdesk Agent\u003C/em\u003E\u003C/i\u003E\u003C/p\u003E",
+              "emailMessage/Importance": "Normal"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+              "operationId": "SendEmailV2",
+              "connectionName": "shared_office365"
+            }
+          }
+        }
+      },
+      "outputs": {}
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}

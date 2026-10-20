@@ -1,0 +1,27 @@
+mcs.metadata:
+  componentName: Office 365 Outlook - Send an email (V2)
+kind: TaskDialog
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: To
+    description: The email address of the person submitting the SharePoint Ticket
+    entity: EmailPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: Body
+    description: An acknowledgement that the Ticket was received, and we aim to respond within 3 working days.
+
+modelDisplayName: Acknowledge SharePoint ticket
+modelDescription: This tool sends an email acknowledgement that a ticket has been received.
+outputs:
+  - propertyName: Response
+
+action:
+  kind: InvokeConnectorTaskAction
+  connectionReference: cts_itHelpDeskAssistant.shared_office365.shared-office365-06c9272c-45a5-4e48-aa90-b3c5488a04d4
+  connectionProperties:
+    mode: Invoker
+
+  operationId: SendEmailV2
+
+outputMode: All

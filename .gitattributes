@@ -1,0 +1,4 @@
+# Replace private values with placeholders on commit; restore them on checkout.
+# The real values are defined only in local .git/config (filter "redact").
+Recruit/**/*.json filter=redact
+Recruit/**/*.yml filter=redact

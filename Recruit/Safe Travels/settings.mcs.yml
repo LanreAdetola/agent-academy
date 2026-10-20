@@ -1,0 +1,34 @@
+displayName: Safe Travels
+schemaName: cr299_safeTravels
+accessControlPolicy: GroupMembership
+authenticationMode: Integrated
+authenticationTrigger: Always
+configuration:
+  channels:
+    - channelId: MsTeams
+
+    - channelId: Microsoft365Copilot
+
+  settings:
+    GenerativeActionsEnabled: false
+
+  botSpeechSettings:
+    isDomainLanguageModelEnabled: false
+
+  publishOnCreate: false
+  publishOnImport: true
+  gPTSettings:
+    defaultSchemaName: cr299_safeTravels.gpt.default
+
+  isLightweightBot: false
+  aISettings:
+    useModelKnowledge: true
+    isFileAnalysisEnabled: true
+    isSemanticSearchEnabled: true
+    contentModeration: Low
+    optInUseLatestModels: false
+
+  deferredProvisioning: false
+
+template: safetravels-1.2.0
+language: 1033
